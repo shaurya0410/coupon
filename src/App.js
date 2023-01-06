@@ -1,24 +1,23 @@
-import logo from './logo.svg';
 import './App.css';
+import { useState } from "react";
+import Coupon from './Components/Coupon';
+import Alert from './Components/Alert';
 
 function App() {
+  const [alert, setAlert] = useState({ status: false, message: "", type: "" });
+  const showAlert = (_message, _type) => {
+    setAlert({ status: true, message: _message, type: _type });
+
+    //after a few seconds auto close alert box
+    setTimeout(() => {
+      setAlert({ status: false, message: "", type: "" });
+    }, 10000);
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+    {alert.status && <Alert alert={alert} setAlert={setAlert} />}
+    <Coupon showAlert={showAlert}/>
+    </>
   );
 }
 
